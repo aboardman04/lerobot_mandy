@@ -1,0 +1,13 @@
+lerobot-rollout \
+--robot.type=so101_follower \
+--robot.port=/dev/ttyACM1 \
+--robot.id=mind_blowing_mandy \
+--robot.cameras="{arm: {type: opencv, index_or_path: '/dev/video10', width: 640, height: 480, fps: 30, fourcc: MJPG}, overhead: {type: opencv, index_or_path: '/dev/video8', width: 640, height: 480, fps: 30, fourcc: MJPG}}" \
+--policy.pretrained_path=aboardman/smolVLA_Training9 \
+--task="Grab the white cube and drop into the bucket" \
+--dataset.repo_id=aboardman/eval_test_1 \
+--dataset.single_task="Grab the white cube and drop into the bucket" \
+--dataset.episode_time_s=50 \
+--dataset.num_episodes=10 \
+--dataset.streaming_encoding=true \
+--dataset.encoder_threads=2

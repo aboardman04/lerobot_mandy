@@ -1,0 +1,42 @@
+{
+  "env": {
+    "type": "gym_manipulator",
+    "name": "gym_hil",
+    "task": "PandaPickCube-v0",
+    "processor": {
+      "control_mode": "gamepad",
+      "gripper": {
+        "use_gripper": true
+      },
+      "reset": {
+        "fixed_reset_joint_positions": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        "control_time_s": 15.0
+      }
+    },
+    "features": {
+      "observation.images.front": {
+        "type": "VISUAL",
+        "shape": [3, 128, 128]
+      },
+      "observation.images.wrist": {
+        "type": "VISUAL",
+        "shape": [3, 128, 128]
+      },
+      "observation.state": {
+        "type": "STATE",
+        "shape": [12]
+      },
+      "action": {
+        "type": "ACTION",
+        "shape": [6]
+      }
+    }
+  },
+  "dataset": {
+    "repo_id": "aboardman/gym-so101-synthetic-dataset",
+    "task": "PandaPickCubeGamepad-v0",
+    "num_episodes_to_record": 50,
+    "push_to_hub": true
+  },
+  "mode": "record"
+}

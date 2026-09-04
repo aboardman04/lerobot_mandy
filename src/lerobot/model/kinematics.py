@@ -82,6 +82,11 @@ class RobotKinematics:
             4x4 transformation matrix of the end-effector pose
         """
 
+        if len(joint_pos_deg) < len(self.joint_names):
+            raise ValueError(
+                f"Expected at least {len(self.joint_names)} joint positions, but got {len(joint_pos_deg)}."
+            )
+
         # Convert degrees to radians
         joint_pos_rad = np.deg2rad(joint_pos_deg[: len(self.joint_names)])
 
@@ -114,6 +119,12 @@ class RobotKinematics:
         Returns:
             Joint positions in degrees that achieve the desired end-effector pose
         """
+
+        if len(current_joint_pos) < len(self.joint_names):
+            raise ValueError(
+                f"Expected at least {len(self.joint_names)} joint positions for initial guess, "
+                f"but got {len(current_joint_pos)}."
+            )
 
         # Convert current joint positions to radians for initial guess
         current_joint_rad = np.deg2rad(current_joint_pos[: len(self.joint_names)])

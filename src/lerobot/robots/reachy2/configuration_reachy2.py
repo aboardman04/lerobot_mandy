@@ -30,7 +30,7 @@ class Reachy2RobotConfig(RobotConfig):
     # IP address of the Reachy 2 robot
     ip_address: str | None = "localhost"
     # Port of the Reachy 2 robot
-    port: int = 50065
+    port: str = "50065"
 
     # If True, turn_off_smoothly() will be sent to the robot before disconnecting.
     disable_torque_on_disconnect: bool = False

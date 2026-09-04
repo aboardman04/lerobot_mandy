@@ -26,7 +26,7 @@ import torch
 from lerobot.cameras import opencv  # noqa: F401
 from lerobot.configs import parser
 from lerobot.datasets import LeRobotDataset
-from lerobot.envs import HILSerlRobotEnvConfig
+from lerobot.envs import EnvConfig, HILSerlRobotEnvConfig
 from lerobot.model import RobotKinematics
 from lerobot.processor import (
     AddBatchDimensionProcessorStep,
@@ -99,7 +99,7 @@ class DatasetConfig:
 class GymManipulatorConfig:
     """Main configuration for gym manipulator environment."""
 
-    env: HILSerlRobotEnvConfig
+    env: EnvConfig
     dataset: DatasetConfig
     mode: str | None = None  # Either "record", "replay", None
     device: str = "cpu"
@@ -320,13 +320,16 @@ def make_robot_env(cfg: HILSerlRobotEnvConfig) -> tuple[gym.Env, Any]:
         use_gripper = cfg.processor.gripper.use_gripper if cfg.processor.gripper is not None else True
         gripper_penalty = cfg.processor.gripper.gripper_penalty if cfg.processor.gripper is not None else 0.0
 
-        env = gym.make(
-            f"gym_hil/{cfg.task}",
-            image_obs=True,
-            render_mode="human",
-            use_gripper=use_gripper,
-            gripper_penalty=gripper_penalty,
-        )
+        kwargs = {
+            "image_obs": True,
+            "render_mode": "human",
+            "use_gripper": use_gripper,
+            "gripper_penalty": gripper_penalty,
+        }
+        if cfg.episode_length is not None:
+            kwargs["max_episode_steps"] = cfg.episode_length
+
+        env = gym.make(f"gym_hil/{cfg.task}", **kwargs)
 
         return env, None
 

@@ -311,6 +311,7 @@ class HILSerlRobotEnvConfig(EnvConfig):
     processor: HILSerlProcessorConfig = field(default_factory=HILSerlProcessorConfig)
 
     name: str = "real_robot"
+    episode_length: int | None = None
 
     @property
     def gym_kwargs(self) -> dict:
